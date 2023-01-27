@@ -15,7 +15,7 @@ def index():
 
 @app.route('/login')
 def login():
-    return redirect(f'https://accounts.spotify.com/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&state={state}')
+    return redirect(f'https://accounts.spotify.com/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}')
 
 
 @app.route('/callback')
