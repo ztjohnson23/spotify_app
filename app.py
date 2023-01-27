@@ -1,9 +1,13 @@
 import flask
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request
 from flask_cors.extension import CORS 
 
 app = Flask(__name__)
 cors = CORS(app)
+
+client_id = 'e9e658d5ab0647c5b2979a9b0dccea05'
+redirect_uri = 'https://librarian-for-spotify.onrender.com/callback'
+client_secret = '1772fc32f7f0486b883e3f3f3911f358'
 
 @app.route('/')
 def index():
@@ -11,15 +15,28 @@ def index():
 
 @app.route('/login')
 def login():
-    client_id = '45145719fea4498bb99238355a19bf3c'
-    redirect_uri = 'http://localhost:8888/callback'
-    state = 'Aa0H6frT44j9mMmM9a'
     return redirect(f'https://accounts.spotify.com/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&state={state}')
 
 
-# @app.route('/redirect')
-# def redirect():
-#     #
+@app.route('/callback')
+def callback():
+    code = request.query.code
+    authOptions = {
+        'url': 'https://accounts.spotify.com/api/token',
+        'form': {
+            'code': code,
+            'redirect_uri': redirect_uri,
+            'grant_type': 'authorization_code'
+        },
+        'headers': {
+            'Authorization': f'Basic{client_id}:{client_secret}'
+        },
+        'json': True
+    }
+    return code
+
+
+
 # @app.route()
 
 if __name__ == '__main__':
