@@ -12,24 +12,14 @@ redirect_uri = 'https://librarian-for-spotify.onrender.com/callback'
 client_secret = '1772fc32f7f0486b883e3f3f3911f358'
 
 access_token = ''
-logged_in = False
+
 print('hi')
 @app.route('/')
 def index():
-    print(logged_in)
-    if logged_in == False:
-        return redirect('/login')
-    else:
-        header = {'Authorization':f'Bearer{access_token}'}
-        response = requests.post('https://api.spotify.com/v1/me',headers=header).json()
-        # return render_template('index.html')
-        return response
+    return render_template('index.html')
+
 
 @app.route('/login')
-def login():
-    return render_template('login.html')
-
-@app.route('/auth')
 def auth():
     return redirect(f'https://accounts.spotify.com/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}')
 
@@ -48,9 +38,16 @@ def callback():
     print(code)
     body = requests.post('https://accounts.spotify.com/api/token',data=data).json()
     access_token = body['access_token']
-    logged_in = True
-    print(logged_in)
-    return redirect('/')  
+    return redirect('/home')  
+
+
+@app.route('/home')
+def home():
+        header = {'Authorization':f'Bearer{access_token}'}
+        response = requests.post('https://api.spotify.com/v1/me',headers=header).json()
+        # return render_template('index.html')
+        return response
+
 
 if __name__ == '__main__':
     app.run()
