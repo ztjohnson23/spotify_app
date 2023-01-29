@@ -1,0 +1,10 @@
+header {
+    padding-top: 5%;
+    padding-bottom: 2.75%;
+    text-align: center;
+    font-size: xx-large;
+}
+button, #button-holder {
+    margin: auto;
+    display:flex;
+}
