@@ -35,6 +35,7 @@ def auth():
 
 @app.route('/callback')
 def callback():
+    print(logged_in)
     code = request.values.get('code')
     state = request.values.get('state')
     data = {
@@ -48,6 +49,7 @@ def callback():
     body = requests.post('https://accounts.spotify.com/api/token',data=data).json()
     access_token = body['access_token']
     logged_in = True
+    print(logged_in)
     return redirect('/')  
 
 if __name__ == '__main__':
