@@ -35,7 +35,6 @@ def auth():
 
 @app.route('/callback')
 def callback():
-    print(logged_in)
     code = request.values.get('code')
     state = request.values.get('state')
     data = {
