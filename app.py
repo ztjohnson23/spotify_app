@@ -13,14 +13,13 @@ client_secret = '1772fc32f7f0486b883e3f3f3911f358'
 
 access_token = ''
 
-print('hi')
 @app.route('/')
 def index():
     return render_template('index.html')
 
 
 @app.route('/login')
-def auth():
+def login():
     return redirect(f'https://accounts.spotify.com/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}')
 
 
@@ -35,7 +34,6 @@ def callback():
         'client_secret': client_secret,
         'grant_type': 'authorization_code'
     }
-    print(code)
     body = requests.post('https://accounts.spotify.com/api/token',data=data).json()
     access_token = body['access_token']
     return redirect('/home')  
