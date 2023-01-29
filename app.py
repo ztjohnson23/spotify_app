@@ -27,12 +27,12 @@ def callback():
     data = {
         'code': code,
         'redirect_uri': redirect_uri,
+        'client_id': client_id,
+        'client_secret': client_secret,
         'grant_type': 'authorization_code'
     }
-    headers = {
-        'Authorization': f'Basic{client_id}:{client_secret}'
-    }
-    body = requests.post('https://accounts.spotify.com/api/token',data=data,headers=headers)
+    print(code)
+    body = requests.post('https://accounts.spotify.com/api/token',data=data)
     return jsonify(body.text)
     
 
