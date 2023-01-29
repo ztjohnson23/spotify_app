@@ -41,10 +41,11 @@ def callback():
 
 @app.route('/home')
 def home():
-        header = {'Authorization':f'Bearer{access_token}'}
-        response = requests.post('https://api.spotify.com/v1/me',headers=header).json()
-        # return render_template('index.html')
-        return response
+    print('access token is:   ', access_token)
+    header = {'Authorization':f'Bearer{access_token}'}
+    response = requests.post('https://api.spotify.com/v1/me',headers=header).json()
+    # return render_template('index.html')
+    return response
 
 
 if __name__ == '__main__':
