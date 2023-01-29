@@ -1,8 +1,8 @@
 import flask
-from flask import Flask, render_template, redirect, jsonify
+from flask import Flask, render_template, redirect, request, jsonify
 from flask_cors.extension import CORS
-
 import requests
+
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -22,8 +22,19 @@ def login():
 
 @app.route('/callback')
 def callback():
-    req = requests.get(redirect_uri)
-    return jsonify(req)
+    code = request.values.get('code')
+    state = request.values.get('state')
+    data = {
+        'code': code,
+        'redirect_uri': redirect_uri,
+        'grant_type': 'authorization_code'
+    }
+    headers = {
+        'Authorization': f'Basic{client_id}:{client_secret}'
+    }
+    body = requests.post('https://accounts.spotify.com/api/token',data=data,headers=headers)
+    return jsonify(body.text)
+    
 
 
 
