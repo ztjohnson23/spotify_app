@@ -33,7 +33,7 @@ def callback():
     }
     print(code)
     body = requests.post('https://accounts.spotify.com/api/token',data=data)
-    return jsonify(body.text)
+    return body.json()
     
 
 
