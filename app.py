@@ -13,9 +13,10 @@ client_secret = '1772fc32f7f0486b883e3f3f3911f358'
 
 access_token = ''
 logged_in = False
-
+print('hi')
 @app.route('/')
 def index():
+    print(logged_in)
     if logged_in == False:
         return redirect('/login')
     else:
