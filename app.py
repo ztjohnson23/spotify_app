@@ -1,5 +1,5 @@
 import flask
-from flask import Flask, render_template, redirect, request, jsonify
+from flask import Flask, render_template, redirect, request, jsonify, session
 from flask_cors.extension import CORS
 import requests
 
@@ -36,12 +36,13 @@ def callback():
     }
     body = requests.post('https://accounts.spotify.com/api/token',data=data).json()
     access_token = body['access_token']
+    session['access_token'] = access_token
     return redirect('/home')  
 
 
 @app.route('/home')
 def home():
-    print('access token is:   ', access_token)
+    access_token = session.get('access_token')
     header = {'Authorization':f'Bearer{access_token}'}
     response = requests.post('https://api.spotify.com/v1/me',headers=header).json()
     # return render_template('index.html')
