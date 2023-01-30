@@ -1,7 +1,7 @@
 import flask
 from flask import Flask, render_template, redirect, request, jsonify, session
 from flask_cors.extension import CORS
-from flask.ext.session import Session
+from flask_session import Session
 import requests
 
 
