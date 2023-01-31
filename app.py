@@ -40,13 +40,15 @@ def callback():
     print(f'p1 - token is:"{access_token}"')
 
     session['access_token'] = access_token
+    print('p2 - redirecting to /home')
     return redirect('/home')  
 
 
 @app.route('/home')
 def home():
+    print('p3 - start home route')
     access_token = session.get('access_token')
-    print(f'p2 - token is:"{access_token}"')
+    print(f'p4 - token is:"{access_token}"')
     header = {'Authorization':f'Bearer {access_token}'}
     response = requests.post('https://api.spotify.com/v1/me',headers=header).json()
     # return render_template('index.html')
