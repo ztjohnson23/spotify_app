@@ -8,6 +8,7 @@ import requests
 app = Flask(__name__)
 cors = CORS(app)
 Session(app)
+SESSION_TYPE = 'redis'
 
 client_id = 'e9e658d5ab0647c5b2979a9b0dccea05'
 redirect_uri = 'https://librarian-for-spotify.onrender.com/callback'
