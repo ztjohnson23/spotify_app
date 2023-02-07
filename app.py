@@ -9,6 +9,7 @@ app = Flask(__name__)
 cors = CORS(app)
 SESSION_TYPE = 'redis'
 app.config['SECRET_KEY']='sxZZZ1234'
+app.config.from_object(__name__)
 Session(app)
 
 client_id = 'e9e658d5ab0647c5b2979a9b0dccea05'
@@ -42,15 +43,15 @@ def callback():
     print(f'p1 - token is:"{access_token}"')
 
     session['access_token'] = access_token
-    print('p2 - redirecting to /home')
+    print('p2 - token saved, redirecting to /home')
     return redirect('/home')  
 
 
 @app.route('/home')
 def home():
-    print('p3 - start home route')
+    print('p3 - start of home route')
     access_token = session.get('access_token')
-    print(f'p4 - token is:"{access_token}"')
+    print(f'p4 - token is:"{access_token}. Success"')
     header = {'Authorization':f'Bearer {access_token}'}
     response = requests.post('https://api.spotify.com/v1/me',headers=header).json()
     # return render_template('index.html')
