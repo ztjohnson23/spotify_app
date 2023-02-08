@@ -1,16 +1,16 @@
 import flask
 from flask import Flask, render_template, redirect, request, jsonify, session
 from flask_cors.extension import CORS
-from flask_session import Session
+# from flask_session import Session
 import requests
 
 
 app = Flask(__name__)
 cors = CORS(app)
-SESSION_TYPE = 'redis'
-app.config['SECRET_KEY']='sxZZZ1234'
-app.config.from_object(__name__)
-Session(app)
+# SESSION_TYPE = 'redis'
+# app.config['SECRET_KEY']='sxZZZ1234'
+# app.config.from_object(__name__)
+# Session(app)
 
 client_id = 'e9e658d5ab0647c5b2979a9b0dccea05'
 redirect_uri = 'https://librarian-for-spotify.onrender.com/callback'
@@ -40,11 +40,16 @@ def callback():
     }
     body = requests.post('https://accounts.spotify.com/api/token',data=data).json()
     access_token = body['access_token']
-    print(f'p1 - token is:"{access_token}"')
+    # print(f'p1 - token is:"{access_token}"')
 
-    session['access_token'] = access_token
-    print('p2 - token saved, redirecting to /home')
-    return redirect('/home')  
+    # session['access_token'] = access_token
+    # print('p2 - token saved, redirecting to /home')
+    # return redirect('/home')  
+
+    #############################################
+    response = request.post('https://api.spotify.com/v1/me',headers=header).json()
+    return response
+    # return render_template('home.html')
 
 
 @app.route('/home')
