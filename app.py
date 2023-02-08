@@ -47,7 +47,7 @@ def callback():
     # return redirect('/home')  
 
     #############################################
-    response = request.post('https://api.spotify.com/v1/me',headers=header).json()
+    response = requests.post('https://api.spotify.com/v1/me',headers=header).json()
     return response
     # return render_template('home.html')
 
