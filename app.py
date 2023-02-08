@@ -59,7 +59,7 @@ def home():
     access_token = session.get('access_token')
     print(f'p4 - token is:"{access_token}. Success"')
     header = {'Authorization':f'Bearer {access_token}'}
-    response = requests.post('https://api.spotify.com/v1/me',headers=header).json()
+    response = requests.post('https://api.spotify.com/v1/recommendations/available-genre-seeds',headers=header).json()
     # return render_template('index.html')
     return response
 
