@@ -48,8 +48,11 @@ def callback():
 
     #############################################
     header = {'Authorization':f'Bearer {access_token}'}
-    response = requests.post('https://api.spotify.com/v1/recommendations/available-genre-seeds',headers=header).json()
-    return response
+    body = requests.post('https://api.spotify.com/v1/recommendations/available-genre-seeds',headers=header)
+    print('Text is: ', body.text)
+    print(type(body))
+
+    return body
     # return render_template('home.html')
 
 
