@@ -52,7 +52,7 @@ def callback():
 
     username = body['display_name']
 
-    return render_template('home.html',username)
+    return render_template('home.html',username=username)
 
 
 # @app.route('/home')
