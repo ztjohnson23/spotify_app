@@ -50,7 +50,7 @@ def callback():
     header = {'Authorization':f'Bearer {access_token}'}
     body = requests.post('https://api.spotify.com/v1/recommendations/available-genre-seeds',headers=header)
     print(body.status_code)
-    print(body.reason))
+    print(body.reason)
     print('Text is: ', body.text)
     print(type(body))
 
