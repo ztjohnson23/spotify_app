@@ -48,14 +48,11 @@ def callback():
 
     #############################################
     header = {'Authorization':f'Bearer {access_token}'}
-    body = requests.get('https://api.spotify.com/v1/recommendations/available-genre-seeds',headers=header)
-    print(body.status_code)
-    print(body.reason)
-    print('Text is: ', body.text)
-    print(type(body))
+    body = requests.get('https://api.spotify.com/v1/me',headers=header).json()
 
-    return body
-    # return render_template('home.html')
+    username = body['display_name']
+
+    return render_template('home.html',username)
 
 
 # @app.route('/home')
