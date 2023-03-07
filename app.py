@@ -27,7 +27,7 @@ def login():
     return redirect(f'https://accounts.spotify.com/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}')
 
 
-@app.route('/callback')
+@app.route('/home')
 def callback():
     code = request.values.get('code')
     state = request.values.get('state')
