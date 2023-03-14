@@ -7,6 +7,8 @@ import requests
 
 app = Flask(__name__)
 cors = CORS(app)
+
+app.secret_key = 'g43tjbofq0'
 # SESSION_TYPE = 'redis'
 # app.config['SECRET_KEY']='sxZZZ1234'
 # app.config.from_object(__name__)
@@ -42,9 +44,11 @@ def callback():
     access_token = body['access_token']
     # print(f'p1 - token is:"{access_token}"')
 
-    # session['access_token'] = access_token
-    # print('p2 - token saved, redirecting to /home')
-    # return redirect('/home')  
+    session['access_token'] = access_token
+    print('p2 - token saved, redirecting to /home')
+    # return redirect('/home')
+    token = session.get('access_token')
+    print('token from session is: ', token)
 
     #############################################
     header = {'Authorization':f'Bearer {access_token}'}
