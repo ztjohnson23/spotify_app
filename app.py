@@ -42,21 +42,22 @@ def callback():
     }
     body = requests.post('https://accounts.spotify.com/api/token',data=data).json()
     access_token = body['access_token']
-    # print(f'p1 - token is:"{access_token}"')
-
+   
     session['access_token'] = access_token
-    print('p2 - token saved, redirecting to /home')
-    # return redirect('/home')
-    token = session.get('access_token')
-    print('token from session is: ', token)
-
     #############################################
     header = {'Authorization':f'Bearer {access_token}'}
     body = requests.get('https://api.spotify.com/v1/me',headers=header).json()
 
     username = body['display_name']
 
-    return render_template('home.html',username=username)
+    body = requests.get('https://api.spotify.com/v1/me/tracks',headers=header,data={'limit':50}).json()
+    user_songs = body['items']
+    while body['next'] != '':
+        body = requests.get(body['next']).json()
+        user_songs.extend(body['items'])
+
+
+    return render_template('home.html',username=username,songs = user_songs)
 
 
 # @app.route('/home')
