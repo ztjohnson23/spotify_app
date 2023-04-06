@@ -15,7 +15,7 @@ app.secret_key = 'g43tjbofq0'
 # Session(app)
 
 client_id = 'e9e658d5ab0647c5b2979a9b0dccea05'
-redirect_uri = 'https://librarian-for-spotify.onrender.com/callback'
+redirect_uri = 'https://librarian-for-spotify.onrender.com/home'
 client_secret = '1772fc32f7f0486b883e3f3f3911f358'
 
 
