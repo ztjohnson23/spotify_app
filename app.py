@@ -17,6 +17,7 @@ app.secret_key = 'g43tjbofq0'
 client_id = 'e9e658d5ab0647c5b2979a9b0dccea05'
 redirect_uri = 'https://librarian-for-spotify.onrender.com/home'
 client_secret = '1772fc32f7f0486b883e3f3f3911f358'
+scope = 'user-library-read+playlist-modify-public'
 
 
 @app.route('/')
@@ -26,7 +27,7 @@ def index():
 
 @app.route('/login')
 def login():
-    return redirect(f'https://accounts.spotify.com/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}')
+    return redirect(f'https://accounts.spotify.com/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&scope={scope}')
 
 
 @app.route('/home')
@@ -50,12 +51,12 @@ def callback():
 
     username = body['display_name']
 
-    body = requests.get('https://api.spotify.com/v1/me/tracks',headers=header).json()
+    body = requests.get('https://api.spotify.com/v1/me/tracks',headers=header,data={'limit':50}).json()
             # ,data={'limit':50}
     print(body)
     user_songs = body['items']
     
-    while body['next'] != '':
+    while body['next'] != null:
         body = requests.get(body['next']).json()
         print(body)
         user_songs.extend(body['items'])
