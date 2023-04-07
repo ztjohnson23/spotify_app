@@ -5,49 +5,55 @@ body {
     max-width: 1000px;
     background-color: #fff;
     min-height: 100vh;
-    height:100%;
     margin: auto;
     border-left: 2px solid black;
     border-right: 2px solid black;
 }
 
 #title-box {
-    padding-top:2%;
-    padding-bottom: 5%;
-    padding-left: 10%;
-    padding-right:10%;
+    /* height:15vh; */
+
+
+
+
+    padding-left: 5vw;
+    padding-right: 5vw;
     background-color: #1DB954;
-    font-size: 24pt;
+    font-size: 18pt;
     text-align: center;
     color:black;
     border-bottom: 2px solid black;
 
 }
 
-#title-box, header {
+#title-box header {
     font-size: 36pt;
-
 }
+#title-box header img {
+    padding-left: 2vw;
+}S
 
 #button-holder {
     align-items: center;
-    padding-top:4%;
-    padding-bottom:4%;
+    padding-top:4svh;
     margin: auto:
 
 }
 
 #about {
-    padding-top:8%;
+    padding-top:8vh;
+    padding-left: 4vw;
+    padding-right: 4vw;
 }
 
 #login-button {
-    background-color: #555;
+    color:#000;
+    background-color: #1DB954;
     border-color:black;
     margin: 0 auto;
     width: 25%;
     display: block;
 }
 #login-button:hover {
-    background-color: #333;
+    background-color: #0DA944;
 }

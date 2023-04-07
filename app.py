@@ -53,12 +53,15 @@ def callback():
     body = requests.get('https://api.spotify.com/v1/me/tracks',headers=header).json()
             # ,data={'limit':50}
     user_songs = body['items']
+    print(body)
     while body['next'] != '':
         body = requests.get(body['next']).json()
+        print(body)
         user_songs.extend(body['items'])
 
 
-    return render_template('home.html',username=username,songs = user_songs)
+    # return render_template('home.html',username=username,songs = user_songs)
+    return body
 
 
 # @app.route('/home')
