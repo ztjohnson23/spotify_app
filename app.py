@@ -41,10 +41,11 @@ def callback():
         'client_id': client_id,
         'client_secret': client_secret,
         'grant_type': 'authorization_code',
-        'scope': scope
+        # 'scope': scope
     }
     body = requests.post('https://accounts.spotify.com/api/token',data=data).json()
     access_token = body['access_token']
+
    
     session['access_token'] = access_token
     #############################################
@@ -52,9 +53,14 @@ def callback():
     body = requests.get('https://api.spotify.com/v1/me',headers=header).json()
 
     username = body['display_name']
+    print('success')
 
-    body = requests.get('https://api.spotify.com/v1/me/tracks',headers=header).json()
+    body = requests.get('https://api.spotify.com/v1/me/tracks',headers=header)
             # ,data={'limit':50}
+    print(body.content)
+    print(body.status_code)
+    print(body.text)
+    body = body.json()
     print(body)
     user_songs = body['items']
     
