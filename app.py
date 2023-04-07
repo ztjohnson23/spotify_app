@@ -59,7 +59,7 @@ def callback():
     user_songs = body['items']
 
     while body['next'] != None:
-        body = requests.get(body['next'],headers=header).json()
+        body = requests.get(body['next'],params={'limit':50},headers=header).json()
         user_songs.extend(body['items'])
 
 
