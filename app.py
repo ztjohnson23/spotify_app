@@ -52,8 +52,9 @@ def callback():
 
     body = requests.get('https://api.spotify.com/v1/me/tracks',headers=header).json()
             # ,data={'limit':50}
-    user_songs = body['items']
     print(body)
+    user_songs = body['items']
+    
     while body['next'] != '':
         body = requests.get(body['next']).json()
         print(body)
