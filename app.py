@@ -58,7 +58,7 @@ def callback():
             # ,data={'limit':50}
     user_songs = body['items']
     i=1
-    while body['next'] != None and i<50:
+    while body['next'] != None and i<10:
         body = requests.get(body['next'],params={'limit':50},headers=header).json()
         user_songs.extend(body['items'])
         print(f'{i}/63'); i+=1
