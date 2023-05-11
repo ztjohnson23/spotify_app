@@ -28,8 +28,7 @@
             var header = {Authorization: auth};
             console.log(header);
             fetch('https://api.spotify.com/v1/me/tracks',{headers:header,limit:50}).then(res => {
-                console.log(res.text);
-                document.getElementById('songs').text = res.text;
+                console.log(res.json());
                 document.getElementById('content').className = 'loaded';
             });
         </script>
