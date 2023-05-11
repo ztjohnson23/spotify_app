@@ -9,7 +9,8 @@
         <!-- <script src="{{ url_for('static',filename='js/getsongs.js')}}"></script> -->
     </head>
     <body>
-        {{token}}
+        Body = {{body}}.
+        The token is : {{token}}.
         <div id="content">
             <header>
 
@@ -26,7 +27,7 @@
         <script>
             document.getElementById('content').className = 'loading';
             var token = document.URL.split('=')[1];
-            var header = '{Authorization:Bearer ' + token + '}';
+            var header = {Authorization: 'Bearer ' + token};
             console.log(header);
             fetch('https://api.spotify.com/v1/me/tracks',{headers:header,limit:50}).then(res => {
                 console.log(res);

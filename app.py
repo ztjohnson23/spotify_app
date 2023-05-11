@@ -8,7 +8,7 @@ import requests
 app = Flask(__name__)
 cors = CORS(app)
 
-app.secret_key = 'g43tjbofq0'
+# app.secret_key = 'g43tjbofq0'
 # SESSION_TYPE = 'redis'
 # app.config['SECRET_KEY']='sxZZZ1234'
 # app.config.from_object(__name__)
@@ -47,24 +47,24 @@ def callback():
     access_token = body['access_token']
 
    
-    session['access_token'] = access_token
+    # session['access_token'] = access_token
     #############################################
-    header = {'Authorization':f'Bearer {access_token}'}
-    body = requests.get('https://api.spotify.com/v1/me',headers=header).json()
+    # header = {'Authorization':f'Bearer {access_token}'}
+    # body = requests.get('https://api.spotify.com/v1/me',headers=header).json()
 
-    username = body['display_name']
+    # username = body['display_name']
 
-    body = requests.get('https://api.spotify.com/v1/me/tracks',headers=header,params={'limit':50}).json()
-            # ,data={'limit':50}
-    user_songs = body['items']
-    i=1
-    while body['next'] != None and i<10:
-        body = requests.get(body['next'],params={'limit':50},headers=header).json()
-        user_songs.extend(body['items'])
-        print(f'{i}/63'); i+=1
+    # body = requests.get('https://api.spotify.com/v1/me/tracks',headers=header,params={'limit':50}).json()
+    #         # ,data={'limit':50}
+    # user_songs = body['items']
+    # i=1
+    # while body['next'] != None:
+    #     body = requests.get(body['next'],params={'limit':50},headers=header).json()
+    #     user_songs.extend(body['items'])
+    #     print(f'{i}/63'); i+=1
 
 
-    return render_template('home.html',header=header)
+    return render_template('home.html',token=access_token,body=body)
 
 
 
