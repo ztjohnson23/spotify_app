@@ -24,7 +24,8 @@
 
         <script>
             document.getElementById('content').className = 'loading';
-            var header = '{Authorization:Bearer ' + {{token}} + '}';
+            var token = {{token}};
+            var header = '{Authorization:Bearer ' + token + '}';
             console.log(header);
             fetch('https://api.spotify.com/v1/me/tracks',{headers:header,limit:50}).then(res => {
                 console.log(res);
