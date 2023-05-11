@@ -64,7 +64,7 @@ def callback():
         print(f'{i}/63'); i+=1
 
 
-    return render_template('home.html',header=header)
+    return render_template('home.html',username=username,n_songs = len(user_songs))
 
 
 
