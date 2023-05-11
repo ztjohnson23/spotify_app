@@ -27,7 +27,7 @@
             var auth = 'Bearer ' + '{{token}}' ;
             var header = {Authorization: auth};
             fetch('https://api.spotify.com/v1/me/tracks',{headers:header,limit:50}).then(res => {
-                console.log(res.json());
+                // console.log(res.json());
                 console.log(res.text());
                 document.getElementById('content').className = 'loaded';
             });
