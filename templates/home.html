@@ -23,14 +23,12 @@
         </div>
 
         <script>
-            document.getElementById('content').className = 'loading'
+            document.getElementById('content').className = 'loading';
             var header = '{{header}}';
-            fetch('https://api.spotify.com/v1/me/tracks',{headers:header,limit:50}).then(res =>
-                console.log(res)
-
-
-                document.getElementById('content').className = 'loaded'
-            )
+            fetch('https://api.spotify.com/v1/me/tracks',{headers:header,limit:50}).then(res => {
+                console.log(res);
+                document.getElementById('content').className = 'loaded';
+            });
         </script>
     </body>
 </html>
