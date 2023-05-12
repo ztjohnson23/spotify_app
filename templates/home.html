@@ -26,7 +26,29 @@
             document.getElementById('content').className = 'loading';
             var auth = 'Bearer ' + '{{token}}' ;
             var header = {Authorization: auth};
-            fetch('https://api.spotify.com/v1/me/tracks',{headers:header,limit:50}).then(res => res.json()).then(res_json => console.log(res_json));
+            var user_tracks = [];
+            fetch('https://api.spotify.com/v1/me/tracks',{headers:header,limit:50}).then(res => res.json()).then(response => {
+                while (response['next'] != null) {
+                    for (let track in response['items']) {
+                        let id = track['track']['id']
+                        let popularity = track['track']['popularity']
+                        let duration = track['track']['duration_ms']
+                        let explicit = track['track']['explicit']                        
+
+
+                        let track_dict = {
+                            id:id,
+                            popularity:popularity,
+                            duration:duration,
+                            explicit:explicit,
+                            
+                        };
+                        user_tracks.push(track_dict)
+                        
+                    }
+                    fetch(response['next'],{headers:header,limit:50}).then(res => response = res.json()).then()
+                }
+            }).then(console.log(user_tracks));
         </script>
     </body>
 </html>
