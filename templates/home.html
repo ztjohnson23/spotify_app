@@ -31,7 +31,7 @@
                 console.log(response)
                 while (response['next'] != null) {
                     for (let track in response['items']) {
-                        console.log(track)
+                        console.log(track['track'])
                         let id = track['track']['id']
                         let popularity = track['track']['popularity']
                         let duration = track['track']['duration_ms']
