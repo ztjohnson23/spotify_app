@@ -27,7 +27,7 @@
             var auth = 'Bearer ' + '{{token}}' ;
             var header = {Authorization: auth};
             var user_tracks = [];
-            fetch('https://api.spotify.com/v1/me/tracks',{headers:header,limit:50}).then(res => res.json()).then(response => {
+            fetch('https://api.spotify.com/v1/me/tracks?limit=50',{headers:header}).then(res => res.json()).then(response => {
 
                 while (response['next'] != null) {
                     for (let track of response['items']) {
