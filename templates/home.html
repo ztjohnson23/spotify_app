@@ -28,14 +28,9 @@
             var header = {Authorization: auth};
             var user_tracks = [];
             fetch('https://api.spotify.com/v1/me/tracks',{headers:header,limit:50}).then(res => res.json()).then(response => {
-                console.log(response)
-                console.log(response['items'][0])
-                console.log(response['items'][0][0])
-                console.log(response['items'][0]['track'])
 
                 while (response['next'] != null) {
-                    for (let track in response['items']) {
-                        console.log(track['track'])
+                    for (let track of response['items']) {
                         let id = track['track']['id']
                         let popularity = track['track']['popularity']
                         let duration = track['track']['duration_ms']
