@@ -10,9 +10,7 @@
     </head>
     <body>
         <div id="content">
-            <header>
-
-            </header>
+            <header>Librarian for Spotify</header>
             <div id="songs">
                 <h1></h1>
                 
@@ -24,32 +22,55 @@
 
         <script>
             document.getElementById('content').className = 'loading';
-            var auth = 'Bearer ' + '{{token}}' ;
-            var header = {Authorization: auth};
-            var user_tracks = [];
+            let auth = 'Bearer ' + '{{token}}' ;
+            let header = {Authorization: auth};
+            let user_tracks = [];
             fetch('https://api.spotify.com/v1/me/tracks?limit=50',{headers:header}).then(res => res.json()).then(response => {
 
+            function compileSongData(track)
+            {
+                let id = track['track']['id'];
+                let popularity = track['track']['popularity'];
+                let duration = track['track']['duration_ms'];
+                let explicit = track['track']['explicit'];
+
+
+                let track_data = {
+                    id:id,
+                    popularity:popularity,
+                    duration:duration,
+                    explicit:explicit
+                };
+                return track_data;
+            }
+            
                 while (response['next'] != null) {
-                    for (let track of response['items']) {
-                        let id = track['track']['id']
-                        let popularity = track['track']['popularity']
-                        let duration = track['track']['duration_ms']
-                        let explicit = track['track']['explicit']                        
+                    // for (let track of response['items']) {
+                    //     let id = track['track']['id']
+                    //     let popularity = track['track']['popularity']
+                    //     let duration = track['track']['duration_ms']
+                    //     let explicit = track['track']['explicit']                        
 
 
-                        let track_dict = {
-                            id:id,
-                            popularity:popularity,
-                            duration:duration,
-                            explicit:explicit,
+                    //     let track_dict = {
+                    //         id:id,
+                    //         popularity:popularity,
+                    //         duration:duration,
+                    //         explicit:explicit,
                             
-                        };
-                        user_tracks.push(track_dict)
-                        console.log(track_dict)
-                    }
+                    //     };
+                    //     user_tracks.push(track_dict)
+                    // }
+
+                    let tracks_batch = response['items'].map(compileSongData)
+                    user_tracks = user_tracks.concat(tracks_batch)
+
                     fetch(response['next'],{headers:header}).then(res => response = res.json()).then()
                 }
-            }).then(console.log(user_tracks));
+                return user_tracks;
+            }).then(user_tracks => {
+                console.log(user_tracks)
+            });
         </script>
     </body>
 </html>
