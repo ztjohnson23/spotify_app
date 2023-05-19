@@ -65,11 +65,11 @@
                     let tracks_batch = response['items'].map(compileSongData)
                     user_tracks = user_tracks.concat(tracks_batch)
 
-                    fetch(response['next'],{headers:header}).then(res => response = res.json()).then()
+                    fetch(response['next'],{headers:header}).then(res => response = res.json());
                 }
                 return user_tracks;
             }).then(user_tracks => {
-                console.log(user_tracks)
+                console.log(user_tracks);
             });
         </script>
     </body>
