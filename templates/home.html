@@ -24,53 +24,31 @@
             document.getElementById('content').className = 'loading';
             let auth = 'Bearer ' + '{{token}}' ;
             let header = {Authorization: auth};
-            let user_tracks = [];
-            fetch('https://api.spotify.com/v1/me/tracks?limit=50',{headers:header}).then(res => res.json()).then(response => {
+            let track_data = [];
+            let audio_data = [];
+            let is_next = true;
+            let offset = 0;
 
-            function compileSongData(track)
-            {
-                let id = track['track']['id'];
-                let popularity = track['track']['popularity'];
-                let duration = track['track']['duration_ms'];
-                let explicit = track['track']['explicit'];
+            while (is_next) {
+                let tracks = fetch('https://api.spotify.com/v1/me/tracks?limit=50&offset='+offset,{headers:header}).then(res => res.json()).then(response => {
+                    if (response.next === null) {
+                        is_next = false;
+                    };
+                    return response.items;
+                });
+                let ids = tracks.map(x => x.track.id);
+                let query_url = 'https://api.spotify.com/v1/audio-features?ids=' + ids.toString();
+                let audio_features = fetch(query_url,{headers:header}).then(res => res.json()).then(response => response.audio_features);
 
+                track_data.push(tracks);
+                audio_data.push(audio_features);
 
-                let track_data = {
-                    id:id,
-                    popularity:popularity,
-                    duration:duration,
-                    explicit:explicit
-                };
-                return track_data;
-            }
-            
-                while (response['next'] != null) {
-                    // for (let track of response['items']) {
-                    //     let id = track['track']['id']
-                    //     let popularity = track['track']['popularity']
-                    //     let duration = track['track']['duration_ms']
-                    //     let explicit = track['track']['explicit']                        
+                offset += 50;
+            };
+            localStorage.setItem("tracks",track_data);
+            localStorage.setItem("audio_features",audio_data);
+                
 
-
-                    //     let track_dict = {
-                    //         id:id,
-                    //         popularity:popularity,
-                    //         duration:duration,
-                    //         explicit:explicit,
-                            
-                    //     };
-                    //     user_tracks.push(track_dict)
-                    // }
-
-                    let tracks_batch = response['items'].map(compileSongData)
-                    user_tracks = user_tracks.concat(tracks_batch)
-
-                    fetch(response['next'],{headers:header}).then(res => response = res.json());
-                }
-                return user_tracks;
-            }).then(user_tracks => {
-                console.log(user_tracks);
-            });
         </script>
     </body>
 </html>
