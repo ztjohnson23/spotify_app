@@ -31,22 +31,23 @@
 
             console.log('looping');
             while (is_next) {
-                let tracks = fetch('https://api.spotify.com/v1/me/tracks?limit=50&offset='+offset,{headers:header}).then(res => res.json()).then(response => {
+                fetch('https://api.spotify.com/v1/me/tracks?limit=50&offset='+offset,{headers:header}).then(res => res.json()).then(response => {
                     if (response.next == null) {
                         is_next = false;
                         console.log('no more pages')
                     };
                     console.log(response.items)
                     return response.items;
+                }).then(tracks => {
+                    if (offset == 0) {console.log(tracks)};
+                    let ids = tracks.map(x => x.track.id);
+                    let query_url = 'https://api.spotify.com/v1/audio-features?ids=' + ids.toString();
+                    let audio_features = fetch(query_url,{headers:header}).then(res => res.json()).then(response => response.audio_features).then(audio_features => {
+
+                    track_data.push(tracks);
+                    audio_data.push(audio_features);
+                    });
                 });
-                console.log(tracks)
-                let ids = tracks.map(x => x.track.id);
-                let query_url = 'https://api.spotify.com/v1/audio-features?ids=' + ids.toString();
-                let audio_features = fetch(query_url,{headers:header}).then(res => res.json()).then(response => response.audio_features);
-
-                track_data.push(tracks);
-                audio_data.push(audio_features);
-
                 offset += 50;
             };
             console.log('finished')
