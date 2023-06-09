@@ -57,31 +57,37 @@
                                 // 'album_genres': track.track.album.genres,
                                 // 'album_popularity': track.track.album.popularity,
 
-                                // 'acousticness': audio_data[i].acousticness,
-                                // 'danceability': audio_data[i].danceability,
-                                // 'duration': audio_data[i].duration_ms,
-                                // 'energy': audio_data[i].energy,
-                                // 'instrumentalness': audio_data[i].instrumentalness,
-                                // 'key': audio_data[i].key,
-                                // 'liveness': audio_data[i].liveness,
-                                // 'loudness': audio_data[i].loudness,
-                                // 'mode': audio_data[i].mode,
-                                // 'speechiness': audio_data[i].speechiness,
-                                // 'tempo': audio_data[i].tempo,
-                                // 'time_signature': audio_data[i].time_signature,
-                                // 'valence': audio_data[i].valence
+                                'acousticness': audio_data[i].acousticness,
+                                'danceability': audio_data[i].danceability,
+                                'duration': audio_data[i].duration_ms,
+                                'energy': audio_data[i].energy,
+                                'instrumentalness': audio_data[i].instrumentalness,
+                                'key': audio_data[i].key,
+                                'liveness': audio_data[i].liveness,
+                                'loudness': audio_data[i].loudness,
+                                'mode': audio_data[i].mode,
+                                'speechiness': audio_data[i].speechiness,
+                                'tempo': audio_data[i].tempo,
+                                'time_signature': audio_data[i].time_signature,
+                                'valence': audio_data[i].valence
                             }));
+                            // debug
                             console.log(user_tracks);
+                            // 
                 return user_tracks, is_next;
             }
 
             while (is_next && offset < 500) {
                 let next50,is_next = getUserTrackData(offset);
-                track_data = track_data.concat(next50)
+                // debug
+                console.log(next50);
+                // 
+                track_data = track_data.concat(next50);
                 offset += 50;
             };
-
+            // debug
             console.log(track_data);
+            // 
             localStorage.setItem("tracks",track_data);
 
         </script>
