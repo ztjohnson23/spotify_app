@@ -50,14 +50,16 @@
                 });
                 offset += 50;
                 if (offset % 500 == 0) {
-                    console.log('pulled ' + offset + 'songs, sleeping')
+                    console.log('pulled ' + offset + ' songs, sleeping')
                     setTimeout(() => {},3000)
                     console.log('awake')
                 }
             };
 
-            let user_tracks = track_data.map((track,i) => {
-                return {
+            console.log(track_data);
+            console.log(audio_data);
+
+            let user_tracks = track_data.map((track,i) => ({
                     'explicit': track.track.explicit,
                     'track_popularity': track.track.popularity,
                     'artist_genres': track.track.artists[0].genres,
@@ -79,8 +81,7 @@
                     'tempo': audio_data[i].tempo,
                     'time_signature': audio_data[i].time_signature,
                     'valence': audio_data[i].valence
-                }
-            });
+                }));
 
             console.log(user_tracks)
             localStorage.setItem("tracks",user_tracks);
