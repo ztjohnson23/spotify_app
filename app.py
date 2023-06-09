@@ -48,13 +48,9 @@ def callback():
 
 @app.route('/run', methods = ['POST'])
 def run():
-    print('lookhere1')
-    print(request.form['data'])
     track_data = json.loads(request.form['data'])
-    print('lookhere2')
-    print(track_data)
     tracks_df = pd.DataFrame(track_data)
-    tracks_df.to_csv('/')
+    tracks_df.to_csv('/usertracks.csv')
 
     return jsonify(track_data)
 
