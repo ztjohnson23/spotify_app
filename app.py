@@ -50,14 +50,10 @@ def run():
     track_data = json.loads(request.form['data'])
     tracks_df = pd.DataFrame(track_data)
 
-    file_buffer = StringIO()
-    tracks_df.to_csv(file_buffer)
-    file_buffer.seek(0)
-    response = Response(file_buffer,mimetype='text/csv')
-    response.headers.set("Content-Disposition", "attachment", filename="{0}.csv".format('usertracks'))
-    return response
+    with open('usertracks.txt', 'w') as file:
+        file.write(request.form['data'])
 
-    # return jsonify(track_data)
+    return jsonify(track_data)
 
 
 
