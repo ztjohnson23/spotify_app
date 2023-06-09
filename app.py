@@ -50,7 +50,7 @@ def callback():
 def run():
     # track_data = json.loads(request.form['data'])
     session['data'] = request.form['data']
-    return
+    return 'success'
     # return jsonify(track_data)
     
     # tracks_df = pd.DataFrame(track_data)
