@@ -3,6 +3,7 @@ from flask import Flask, render_template, redirect, request, jsonify, session
 from flask_cors.extension import CORS
 # from flask_session import Session
 import requests
+import pandas as pd
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -47,8 +48,10 @@ def callback():
 @app.route('/run', methods = ['POST'])
 def run():
     track_data = request.form['data']
-    print('success')
-    return jsonify(track_data)
+    tracks_df = pd.DataFrame(track_data)
+    tracks_df.to_csv('/')
+
+    return
 
 
 
