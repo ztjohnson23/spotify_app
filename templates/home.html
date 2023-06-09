@@ -28,65 +28,54 @@
             let auth = 'Bearer ' + '{{token}}' ;
             let header = {Authorization: auth};
             let track_data = [];
-            let audio_data = [];
             let is_next = true;
             let offset = 0;
 
+            async function getUserTrackData(offset) {
+                response = await fetch('https://api.spotify.com/v1/me/tracks?limit=50&offset='+offset,{headers:header}).then(res => res.json());
+                if (response.next == null) {
+                    is_next = false;
+                } else {
+                    is_next = true;
+                };
+                let query_url = 'https://api.spotify.com/v1/audio-features?ids=' + ids.toString();
+                let a = await fetch(query_url,{headers:header}).then(res => res.json());
+                let audio_data = a.audio_features;
+
+                let user_tracks = track_data.map((track,i) => ({
+                                'explicit': track.track.explicit,
+                                'track_popularity': track.track.popularity,
+                                'artist_genres': track.track.artists[0].genres,
+                                'artist_popularity':track.track.artists[0].popularity,
+                                'release_date': track.track.album.release_date,
+                                'album_genres': track.track.album.genres,
+                                'album_popularity': track.track.album.popularity,
+
+                                'acousticness': audio_data[i].acousticness,
+                                'danceability': audio_data[i].danceability,
+                                'duration': audio_data[i].duration_ms,
+                                'energy': audio_data[i].energy,
+                                'instrumentalness': audio_data[i].instrumentalness,
+                                'key': audio_data[i].key,
+                                'liveness': audio_data[i].liveness,
+                                'loudness': audio_data[i].loudness,
+                                'mode': audio_data[i].mode,
+                                'speechiness': audio_data[i].speechiness,
+                                'tempo': audio_data[i].tempo,
+                                'time_signature': audio_data[i].time_signature,
+                                'valence': audio_data[i].valence
+                            }));
+                return user_tracks, is_next;
+            }
+
             while (is_next && offset < 500) {
-                fetch('https://api.spotify.com/v1/me/tracks?limit=50&offset='+offset,{headers:header}).then(res => res.json()).then(response => {
-                    if (response.next == null) {
-                        is_next = false;
-                    };
-                    return response.items;
-                }).then(tracks => {
-                    if (offset == 0) {console.log(tracks)};
-                    let ids = tracks.map(x => x.track.id);
-                    let query_url = 'https://api.spotify.com/v1/audio-features?ids=' + ids.toString();
-                    let audio_features = fetch(query_url,{headers:header}).then(res => res.json()).then(response => response.audio_features).then(audio_features => {
-
-                    track_data = track_data.concat(tracks);
-                    audio_data = audio_data.concat(audio_features);
-                    });
-
-                    offset += 50;
-                    if (offset % 500 == 0) {
-                        console.log('pulled ' + offset + ' songs, sleeping')
-                        setTimeout(() => {},3000)
-                        console.log('awake')
-                    }
-                });
+                (next50,is_next) = getUserTrackData(offset);
+                track_data = track_data.concat(next50)
+                offset += 50;
             };
 
             console.log(track_data);
-            console.log(audio_data);
-
-            let user_tracks = track_data.map((track,i) => ({
-                    'explicit': track.track.explicit,
-                    'track_popularity': track.track.popularity,
-                    'artist_genres': track.track.artists[0].genres,
-                    'artist_popularity':track.track.artists[0].popularity,
-                    'release_date': track.track.album.release_date,
-                    'album_genres': track.track.album.genres,
-                    'album_popularity': track.track.album.popularity,
-
-                    'acousticness': audio_data[i].acousticness,
-                    'danceability': audio_data[i].danceability,
-                    'duration': audio_data[i].duration_ms,
-                    'energy': audio_data[i].energy,
-                    'instrumentalness': audio_data[i].instrumentalness,
-                    'key': audio_data[i].key,
-                    'liveness': audio_data[i].liveness,
-                    'loudness': audio_data[i].loudness,
-                    'mode': audio_data[i].mode,
-                    'speechiness': audio_data[i].speechiness,
-                    'tempo': audio_data[i].tempo,
-                    'time_signature': audio_data[i].time_signature,
-                    'valence': audio_data[i].valence
-                }));
-
-            console.log(user_tracks)
-            localStorage.setItem("tracks",user_tracks);
-                
+            localStorage.setItem("tracks",track_data);
 
         </script>
     </body>
