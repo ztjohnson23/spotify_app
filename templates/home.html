@@ -38,12 +38,14 @@
                 } else {
                     is_next = true;
                 };
-                let ids = response.items.map(x => x.track.id);
+
+                let tracks = response.items;
+                let ids = tracks.map(x => x.track.id);
                 let query_url = 'https://api.spotify.com/v1/audio-features?ids=' + ids.toString();
                 let a = await fetch(query_url,{headers:header}).then(res => res.json());
                 let audio_data = a.audio_features;
 
-                let user_tracks = track_data.map((track,i) => ({
+                let user_tracks = tracks.map((track,i) => ({
                                 'explicit': track.track.explicit,
                                 'track_popularity': track.track.popularity,
                                 'artist_genres': track.track.artists[0].genres,
