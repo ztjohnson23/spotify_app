@@ -49,7 +49,7 @@ def callback():
 @app.route('/run', methods = ['POST'])
 def run():
     print('lookhere1')
-    print(track_data)
+    print(request.form['data'])
     track_data = json.loads(request.form['data'])
     print('lookhere2')
     print(track_data)
