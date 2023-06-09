@@ -54,9 +54,9 @@ def run():
     print('lookhere2')
     print(track_data)
     tracks_df = pd.DataFrame(track_data)
-    # tracks_df.to_csv('/')
+    tracks_df.to_csv('/')
 
-    return
+    return jsonify(track_data)
 
 
 
