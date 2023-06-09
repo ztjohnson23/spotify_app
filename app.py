@@ -49,7 +49,9 @@ def callback():
 @app.route('/run', methods = ['POST'])
 def run():
     # track_data = json.loads(request.form['data'])
-    session['data'] = request.form['data']
+    # session['data'] = request.form['data']
+    session['data'] = '["tiny"]'
+
     return 'success'
     # return jsonify(track_data)
     
@@ -64,7 +66,7 @@ def run():
 
 @app.route('/test')
 def getfile():
-    track_data = session['data']
+    track_data = json.loads(session['data'])
     tracks_df = pd.DataFrame(track_data)
     file_buffer = StringIO()
     tracks_df.to_csv(file_buffer)

@@ -87,7 +87,9 @@ getUserTrackData();
 
 function run() {
     let track_data = localStorage.getItem("tracks");
-    $.post('/run', {data: track_data})
+    $.post('/run', {data: track_data}).then(() => {
+        
+    });
 };
         </script>
     </body>
