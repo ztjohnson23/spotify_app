@@ -38,6 +38,7 @@
                 } else {
                     is_next = true;
                 };
+                let ids = response.items.map(x => x.track.id);
                 let query_url = 'https://api.spotify.com/v1/audio-features?ids=' + ids.toString();
                 let a = await fetch(query_url,{headers:header}).then(res => res.json());
                 let audio_data = a.audio_features;
