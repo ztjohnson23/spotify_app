@@ -47,13 +47,14 @@
                     track_data = track_data.concat(tracks);
                     audio_data = audio_data.concat(audio_features);
                     });
+
+                    offset += 50;
+                    if (offset % 500 == 0) {
+                        console.log('pulled ' + offset + ' songs, sleeping')
+                        setTimeout(() => {},3000)
+                        console.log('awake')
+                    }
                 });
-                offset += 50;
-                if (offset % 500 == 0) {
-                    console.log('pulled ' + offset + ' songs, sleeping')
-                    setTimeout(() => {},3000)
-                    console.log('awake')
-                }
             };
 
             console.log(track_data);
