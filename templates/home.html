@@ -69,7 +69,7 @@
             }
 
             while (is_next && offset < 500) {
-                (next50,is_next) = getUserTrackData(offset);
+                next50,is_next = getUserTrackData(offset);
                 track_data = track_data.concat(next50)
                 offset += 50;
             };
