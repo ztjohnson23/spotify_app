@@ -34,9 +34,9 @@
             async function getUserTrackData(offset) {
                 response = await fetch('https://api.spotify.com/v1/me/tracks?limit=50&offset='+offset,{headers:header}).then(res => res.json());
                 if (response.next == null) {
-                    is_next = false;
+                    let is_next = false;
                 } else {
-                    is_next = true;
+                    let is_next = true;
                 };
 
                 let tracks = response.items;
@@ -49,38 +49,41 @@
                 console.log(audio_data)
                 // 
                 let user_tracks = tracks.map((track,i) => ({
-                                'explicit': track.track.explicit,
-                                'track_popularity': track.track.popularity,
-                                // 'artist_genres': track.track.artists[0].genres,
-                                // 'artist_popularity':track.track.artists[0].popularity,
-                                'release_date': track.track.album.release_date,
-                                // 'album_genres': track.track.album.genres,
-                                // 'album_popularity': track.track.album.popularity,
+                    'explicit': track.track.explicit,
+                    'track_popularity': track.track.popularity,
+                    // 'artist_genres': track.track.artists[0].genres,
+                    // 'artist_popularity':track.track.artists[0].popularity,
+                    'release_date': track.track.album.release_date,
+                    // 'album_genres': track.track.album.genres,
+                    // 'album_popularity': track.track.album.popularity,
 
-                                'acousticness': audio_data[i].acousticness,
-                                'danceability': audio_data[i].danceability,
-                                'duration': audio_data[i].duration_ms,
-                                'energy': audio_data[i].energy,
-                                'instrumentalness': audio_data[i].instrumentalness,
-                                'key': audio_data[i].key,
-                                'liveness': audio_data[i].liveness,
-                                'loudness': audio_data[i].loudness,
-                                'mode': audio_data[i].mode,
-                                'speechiness': audio_data[i].speechiness,
-                                'tempo': audio_data[i].tempo,
-                                'time_signature': audio_data[i].time_signature,
-                                'valence': audio_data[i].valence
-                            }));
-                            // debug
-                            console.log(user_tracks);
-                            // 
-                return [user_tracks, is_next];
+                    'acousticness': audio_data[i].acousticness,
+                    'danceability': audio_data[i].danceability,
+                    'duration': audio_data[i].duration_ms,
+                    'energy': audio_data[i].energy,
+                    'instrumentalness': audio_data[i].instrumentalness,
+                    'key': audio_data[i].key,
+                    'liveness': audio_data[i].liveness,
+                    'loudness': audio_data[i].loudness,
+                    'mode': audio_data[i].mode,
+                    'speechiness': audio_data[i].speechiness,
+                    'tempo': audio_data[i].tempo,
+                    'time_signature': audio_data[i].time_signature,
+                    'valence': audio_data[i].valence
+                }));
+                user_tracks.push(is_next);
+                // debug
+                console.log(user_tracks);
+                // 
+                return user_tracks;
             }
 
             while (is_next && offset < 500) {
-                let [next50, is_next] = getUserTrackData(offset);
+                let next50 = getUserTrackData(offset);
+                is_next = next50.pop()
                 // debug
                 console.log(next50);
+                console.log(is_next);
                 // 
                 track_data = track_data.concat(next50);
                 offset += 50;
