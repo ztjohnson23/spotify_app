@@ -78,7 +78,7 @@ while (is_next && offset < 100) {
     };   
 
 // console.log(track_data);
-localStorage.setItem("tracks",track_data);
+localStorage.setItem("tracks",JSON.stringify(track_data));
 
 };
 
@@ -87,9 +87,7 @@ getUserTrackData();
 
 function run() {
     let track_data = localStorage.getItem("tracks");
-
-    $.post('/run', {data: track_data});
-    console.log(track_data);
+    $.post('/run', {data: track_data})
 };
         </script>
     </body>

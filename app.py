@@ -4,6 +4,7 @@ from flask_cors.extension import CORS
 # from flask_session import Session
 import requests
 import pandas as pd
+import json
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -47,10 +48,13 @@ def callback():
 
 @app.route('/run', methods = ['POST'])
 def run():
-    track_data = jsonify(request.form['data'])
+    print('lookhere1')
+    print(track_data)
+    track_data = json.loads(request.form['data'])
+    print('lookhere2')
     print(track_data)
     tracks_df = pd.DataFrame(track_data)
-    tracks_df.to_csv('/')
+    # tracks_df.to_csv('/')
 
     return
 

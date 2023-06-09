@@ -5,3 +5,4 @@ flask_session
 requests
 redis
 pandas
+json
