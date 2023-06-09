@@ -1,5 +1,5 @@
 import flask
-from flask import Flask, render_template, redirect, request, jsonify, Response
+from flask import Flask, render_template, redirect, request, jsonify, Response, url_for
 from flask_cors.extension import CORS
 # from flask_session import Session
 import requests
@@ -9,6 +9,7 @@ from io import StringIO
 
 app = Flask(__name__)
 cors = CORS(app)
+app.secret_key = "it's/a/secret"
 
 client_id = 'e9e658d5ab0647c5b2979a9b0dccea05'
 redirect_uri = 'https://librarian-for-spotify.onrender.com/home'
@@ -45,17 +46,19 @@ def callback():
     return render_template('home.html',token=access_token,body=body)
 
 
-@app.route('/run', methods = ['POST'])
+@app.route('/run', methods = ['GET','POST'])
 def run():
-    track_data = json.loads(request.form['data'])
-    tracks_df = pd.DataFrame(track_data)
-
-    file_buffer = StringIO()
-    tracks_df.to_csv(file_buffer)
-    file_buffer.seek(0)
-    response = Response(file_buffer,mimetype='text/csv')
-    response.headers.set("Content-Disposition", "attachment", filename="usertracks.csv")
-    return response
+    if request.method == 'POST':
+        track_data = json.loads(request.form['data'])
+        tracks_df = pd.DataFrame(track_data)
+        return redirect('/run')
+    else:
+        file_buffer = StringIO()
+        tracks_df.to_csv(file_buffer)
+        file_buffer.seek(0)
+        response = Response(file_buffer,mimetype='text/csv')
+        response.headers.set("Content-Disposition", "attachment", filename="usertracks.csv")
+        return response
 
     # return jsonify(track_data)
 
