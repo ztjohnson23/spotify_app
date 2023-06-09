@@ -30,7 +30,7 @@
             let offset = 0;
 
             console.log('looping');
-            while (is_next) {
+            while (is_next && offset < 300) {
                 fetch('https://api.spotify.com/v1/me/tracks?limit=50&offset='+offset,{headers:header}).then(res => res.json()).then(response => {
                     if (response.next == null) {
                         is_next = false;
