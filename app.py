@@ -47,6 +47,7 @@ def callback():
 @app.route('/run', methods = ['POST'])
 def run():
     track_data = request.form['data']
+    print('success')
     return jsonify(track_data)
 
 
