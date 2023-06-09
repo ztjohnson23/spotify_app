@@ -44,10 +44,7 @@
                 let query_url = 'https://api.spotify.com/v1/audio-features?ids=' + ids.toString();
                 let a = await fetch(query_url,{headers:header}).then(res => res.json());
                 let audio_data = a.audio_features;
-                // debug
-                console.log(tracks)
-                console.log(audio_data)
-                // 
+
                 let user_tracks = tracks.map((track,i) => ({
                     'explicit': track.track.explicit,
                     'track_popularity': track.track.popularity,
@@ -80,6 +77,10 @@
 
             while (is_next && offset < 500) {
                 let next50 = getUserTrackData(offset);
+                // debug
+                console.log(next50);
+                console.log(typeof(next50));
+                // 
                 is_next = next50.pop()
                 // debug
                 console.log(next50);
