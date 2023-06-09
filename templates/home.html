@@ -16,7 +16,7 @@
                 
             </div>
             <div id="playlist-options">
-                
+                <a id='run' class="btn btn-success btn-lg" role="button" onclick="run()">Go</a>
             </div>
         </div>
 
@@ -34,7 +34,7 @@ let track_data = [];
 let is_next = true;
 let offset = 0;
 
-while (is_next && offset < 500) {
+while (is_next && offset < 100) {
     response = await fetch('https://api.spotify.com/v1/me/tracks?limit=50&offset='+offset,{headers:header}).then(res => res.json());
     if (response.next == null) {
         is_next = false;
@@ -78,10 +78,15 @@ while (is_next && offset < 500) {
     };   
 
 console.log(track_data);
-localStorage.setItem("tracks",track_data);
+// localStorage.setItem("tracks",track_data);
+
 };
 
 getUserTrackData();
+
+function run() {
+    $.post('/run', {data: track_data});
+};
 
         </script>
     </body>
