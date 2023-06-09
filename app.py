@@ -1,15 +1,14 @@
 import flask
-from flask import Flask, render_template, redirect, request, jsonify, session
+from flask import Flask, render_template, redirect, request, jsonify, Response
 from flask_cors.extension import CORS
 # from flask_session import Session
 import requests
 import pandas as pd
 import json
+from io import StringIO
 
 app = Flask(__name__)
 cors = CORS(app)
-
-app.secret_key = 'itsasecret123123'
 
 client_id = 'e9e658d5ab0647c5b2979a9b0dccea05'
 redirect_uri = 'https://librarian-for-spotify.onrender.com/home'
@@ -50,9 +49,15 @@ def callback():
 def run():
     track_data = json.loads(request.form['data'])
     tracks_df = pd.DataFrame(track_data)
-    tracks_df.to_csv('/usertracks.csv')
 
-    return jsonify(track_data)
+    file_buffer = StringIO()
+    tracks_df.to_csv(file_buffer)
+    file_buffer.seek(0)
+    response = Response(file_buffer,mimetype='text/csv')
+    response.headers.set("Content-Disposition", "attachment", filename="{0}.csv".format('usertracks'))
+    return response
+
+    # return jsonify(track_data)
 
 
 
