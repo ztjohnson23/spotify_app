@@ -5,4 +5,4 @@ flask_session
 requests
 redis
 pandas
-sklearn
+scikit-learn
