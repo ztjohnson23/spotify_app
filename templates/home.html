@@ -34,7 +34,7 @@ let track_data = [];
 let is_next = true;
 let offset = 0;
 
-while (is_next && offset < 100) {
+while (is_next) {
     response = await fetch('https://api.spotify.com/v1/me/tracks?limit=50&offset='+offset,{headers:header}).then(res => res.json());
     if (response.next == null) {
         is_next = false;
@@ -87,10 +87,21 @@ getUserTrackData();
 
 function run() {
     let track_data = localStorage.getItem("tracks");
+    downloadObjectAsJson(track_data,'tracks');
     $.post('/run', {data: track_data}).then(() => {
         
     });
 };
+
+function downloadObjectAsJson(exportObj, exportName){
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+    var downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href",     dataStr);
+    downloadAnchorNode.setAttribute("download", exportName + ".json");
+    document.body.appendChild(downloadAnchorNode); // required for firefox
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  };
         </script>
     </body>
 </html>

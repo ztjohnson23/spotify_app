@@ -50,7 +50,7 @@ def callback():
 def run():
     # track_data = json.loads(request.form['data'])
     # session['data'] = request.form['data']
-    session['data'] = '["tiny"]'
+    session['data'] = '["tiny]'
 
     return 'success'
     # return jsonify(track_data)
