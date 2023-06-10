@@ -49,11 +49,8 @@ def callback():
 @app.route('/run', methods = ['POST'])
 def run():
     # track_data = json.loads(request.form['data'])
-    # session['data'] = request.form['data']
-    session['data'] = '["tiny]'
 
     return 'success'
-    # return jsonify(track_data)
     
     # tracks_df = pd.DataFrame(track_data)
     # file_buffer = StringIO()
@@ -63,30 +60,6 @@ def run():
     # response.headers.set("Content-Disposition", "attachment", filename="usertracks.csv")
     # return response
 
-
-@app.route('/test')
-def getfile():
-    track_data = json.loads(session['data'])
-    tracks_df = pd.DataFrame(track_data)
-    file_buffer = StringIO()
-    tracks_df.to_csv(file_buffer)
-    file_buffer.seek(0)
-    response = Response(file_buffer,mimetype='text/csv')
-    response.headers.set("Content-Disposition", "attachment", filename="usertracks.csv")
-    return response
-
-
-
-
-
-    # test_data = {'c1':[0,1,2,3,4],'c2':[1,2,3,4,5],'c3':['a','b','c','d','e']}
-    # df = pd.DataFrame(test_data)
-    # file = StringIO()
-    # df.to_csv(file)
-    # file.seek(0)
-    # response=Response(file,mimetype='text/csv')
-    # response.headers.set("Content-Disposition", "attachment", filename="test.csv")
-    # return response
 
 if __name__ == '__main__':
     app.run()

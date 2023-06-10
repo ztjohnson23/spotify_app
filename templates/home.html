@@ -50,6 +50,8 @@ while (is_next) {
     let audio_data = a.audio_features;
 
     let next50 = tracks.map((track,i) => ({
+        'id': track.track.id,
+        'title': track.track.name,
         'explicit': track.track.explicit,
         'track_popularity': track.track.popularity,
         // 'artist_genres': track.track.artists[0].genres,
