@@ -6,6 +6,8 @@ import requests
 import pandas as pd
 import json
 from io import StringIO
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.cluster import KMeans
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -48,17 +50,18 @@ def callback():
 
 @app.route('/run', methods = ['POST'])
 def run():
-    # track_data = json.loads(request.form['data'])
+    track_data = json.loads(request.form['data'])
+    df = pd.read_json(track_data)
+    df['release_date'] = pd.to_datetime(df['release_date'])
+    df['explicit'] = df['explicit'].replace({True:1,False:0})
+    X = df.drop(['title','id'],axis=1)
+    X['release_date'] = (X['release_date'] - min(X['release_date'])) / (max(X['release_date']) - min(X['release_date']))
+    scaler = MinMaxScaler()
+    # X_scaled = scaler.fit_transform(X)
 
-    return 'success'
-    
-    # tracks_df = pd.DataFrame(track_data)
-    # file_buffer = StringIO()
-    # tracks_df.to_csv(file_buffer)
-    # file_buffer.seek(0)
-    # response = Response(file_buffer,mimetype='text/csv')
-    # response.headers.set("Content-Disposition", "attachment", filename="usertracks.csv")
-    # return response
+
+
+    return 'done'
 
 
 if __name__ == '__main__':
