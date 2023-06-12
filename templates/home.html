@@ -18,6 +18,10 @@
             <div id="playlist-options">
                 <a id='run' class="btn btn-success btn-lg" role="button" onclick="run()">Go</a>
             </div>
+            <div id="playlists">
+                <select id="playlist number" onchange="changeDisplayedPlaylist()"></select>
+                <div id="playlist display"></div>
+            </div>
         </div>
 
 
@@ -95,8 +99,19 @@ function run() {
     let track_data = localStorage.getItem("tracks");
     // downloadObjectAsJson(track_data,'tracks');
     $.post('/run', {data: track_data}, groups => {
-        localStorage.setItem('cluster_groups',groups)
+        // localStorage.setItem('cluster_groups',groups)
+        track_data.map((x,i) => x['cluster'] = groups[i]);
+        for (let i = 1; i <=68; i++) {
+            document.getElementById("playlist number").add(new Option(i));
+        };
+        track_data.map(track => {
+            if (track['cluster'] == document.getElementById("playlist number").value) {
+                document.getElementById("playlist display").add('<p>'+ track.title + ' by ' + track.artist_name + '</p>')
+            }
+        });
+        
     });
+    console.log('post request sent')
 };
 
 function downloadObjectAsJson(exportObj, exportName){
@@ -107,6 +122,16 @@ function downloadObjectAsJson(exportObj, exportName){
     document.body.appendChild(downloadAnchorNode); // required for firefox
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
+  };
+
+  function changeDisplayedPlaylist() {
+    n = document.getElementById('playlist number').value;
+    document.getElementById("playlist display").innerHTML = '';
+    track_data.map(track => {
+            if (track['cluster'] == document.getElementById("playlist number").value) {
+                document.getElementById("playlist display").add('<p>'+ track.title + ' by ' + track.artist_name + '</p>')
+            }
+        });    
   };
         </script>
     </body>
