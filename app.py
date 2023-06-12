@@ -51,7 +51,8 @@ def callback():
 @app.route('/run', methods = ['POST'])
 def run():
     track_data = json.loads(request.form['data'])
-    df = pd.read_json(track_data)
+    print(track_data)
+    df = pd.DataFrame(track_data)
     df['release_date'] = pd.to_datetime(df['release_date'])
     df['explicit'] = df['explicit'].replace({True:1,False:0})
     X = df.drop(['title','id','artist_name','album_name','album_image'],axis=1)
