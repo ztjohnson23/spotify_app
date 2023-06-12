@@ -58,7 +58,7 @@ def run():
     X['release_date'] = (X['release_date'] - min(X['release_date'])) / (max(X['release_date']) - min(X['release_date']))
     scaler = MinMaxScaler()
     X_scaled = scaler.fit_transform(X)
-    n_clusters = len(X_scaled) / 50
+    n_clusters = int(len(X_scaled) / 50)
     groups = KMeans(n_clusters=n_clusters).fit_predict(X_scaled)
     # df['cluster'] = kmeans
     
