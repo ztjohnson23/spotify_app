@@ -93,9 +93,9 @@ getUserTrackData();
 
 function run() {
     let track_data = localStorage.getItem("tracks");
-    downloadObjectAsJson(track_data,'tracks');
-    $.post('/run', {data: track_data}).then(() => {
-        
+    // downloadObjectAsJson(track_data,'tracks');
+    $.post('/run', {data: track_data}).then(groups => {
+        localStorage.setItem('cluster_groups',groups)
     });
 };
 
