@@ -99,12 +99,14 @@ function run() {
     let track_data = localStorage.getItem("tracks");
     // downloadObjectAsJson(track_data,'tracks');
     $.post('/run', {data: track_data}, groups => {
+        console.log('returned');
+
         // localStorage.setItem('cluster_groups',groups)
-        track_data.map((x,i) => x['cluster'] = groups[i]);
+        tracks.map((x,i) => x['cluster'] = groups[i]);
         for (let i = 1; i <=68; i++) {
             document.getElementById("playlist number").add(new Option(i));
         };
-        track_data.map(track => {
+        tracks.map(track => {
             if (track['cluster'] == document.getElementById("playlist number").value) {
                 document.getElementById("playlist display").add('<p>'+ track.title + ' by ' + track.artist_name + '</p>')
             }
@@ -125,9 +127,13 @@ function downloadObjectAsJson(exportObj, exportName){
   };
 
   function changeDisplayedPlaylist() {
+    track_data = localStorage.getItem('tracks');
+    console.log(typeof(track_data));
+    console.log(track_data);
+    // let tracks = 
     n = document.getElementById('playlist number').value;
     document.getElementById("playlist display").innerHTML = '';
-    track_data.map(track => {
+    tracks.map(track => {
             if (track['cluster'] == document.getElementById("playlist number").value) {
                 document.getElementById("playlist display").add('<p>'+ track.title + ' by ' + track.artist_name + '</p>')
             }
