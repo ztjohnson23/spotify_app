@@ -51,7 +51,6 @@ def callback():
 @app.route('/run', methods = ['POST'])
 def run():
     track_data = json.loads(request.form['data'])
-    print(track_data)
     df = pd.DataFrame(track_data)
     df['release_date'] = pd.to_datetime(df['release_date'])
     df['explicit'] = df['explicit'].replace({True:1,False:0})
@@ -60,7 +59,7 @@ def run():
     scaler = MinMaxScaler()
     X_scaled = scaler.fit_transform(X)
     n_clusters = len(X_scaled) / 50
-    groups = Kmeans(n_clusters=n_clusters).fit_predict(X_scaled)
+    groups = KMeans(n_clusters=n_clusters).fit_predict(X_scaled)
     # df['cluster'] = kmeans
     
 
