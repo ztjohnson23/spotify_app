@@ -39,7 +39,7 @@ let track_data = [];
 let is_next = true;
 let offset = 0;
 
-while (is_next) {
+while (is_next && offset < 300) {
     response = await fetch('https://api.spotify.com/v1/me/tracks?limit=50&offset='+offset,{headers:header}).then(res => res.json());
     if (response.next == null) {
         is_next = false;
@@ -99,7 +99,7 @@ getUserTrackData();
 function run() {
     let track_data = JSON.parse(localStorage.getItem("tracks"));
     // downloadObjectAsJson(track_data,'tracks');
-    $.post('/run', {headers: {'cache-control': 'no-cache', 'x-content-type-options': 'no-sniff'},data: track_data}, groups => {
+    $.post('/run', {data: track_data}, groups => {
         // localStorage.setItem('cluster_groups',groups)
         console.log('returned');
         track_data.map((x,i) => x['cluster'] = groups[i]);
@@ -116,15 +116,15 @@ function run() {
     console.log('post request sent')
 };
 
-function downloadObjectAsJson(exportObj, exportName){
-    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
-    var downloadAnchorNode = document.createElement('a');
-    downloadAnchorNode.setAttribute("href",     dataStr);
-    downloadAnchorNode.setAttribute("download", exportName + ".json");
-    document.body.appendChild(downloadAnchorNode); // required for firefox
-    downloadAnchorNode.click();
-    downloadAnchorNode.remove();
-  };
+// function downloadObjectAsJson(exportObj, exportName){
+//     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+//     var downloadAnchorNode = document.createElement('a');
+//     downloadAnchorNode.setAttribute("href",     dataStr);
+//     downloadAnchorNode.setAttribute("download", exportName + ".json");
+//     document.body.appendChild(downloadAnchorNode); // required for firefox
+//     downloadAnchorNode.click();
+//     downloadAnchorNode.remove();
+//   };
 
   function changeDisplayedPlaylist() {
     track_data = JSON.parse(localStorage.getItem('tracks'));
