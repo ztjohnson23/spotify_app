@@ -107,10 +107,11 @@ function run() {
         for (let i = 1; i <=68; i++) {
             document.getElementById("playlist number").add(new Option(i));
         };
-        for (track of tracks) {
-            if (track['cluster'] == document.getElementById("playlist number").value - 1) {
+        for (let track of tracks) {
+            if (track['cluster'] == 0) {
+                console.log('hit');
                 document.getElementById("playlist display").innerHTML += '<p>'+ track.title + ' by ' + track.artist_name + '</p>'
-            }
+            };
         };
         
     });
