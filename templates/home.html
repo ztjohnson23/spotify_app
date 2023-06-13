@@ -99,15 +99,14 @@ getUserTrackData();
 function run() {
     let track_data = localStorage.getItem("tracks");
     // downloadObjectAsJson(track_data,'tracks');
-    $.post('/run', {data: track_data}, groups => {
-        // localStorage.setItem('cluster_groups',groups)
-        console.log('returned');
+    $.post('/run', {data: track_data}, cluster_array => {
+        let groups = JSON.parse(cluster_array);
         let tracks = JSON.parse(track_data);
         tracks.map((x,i) => x['cluster'] = groups[i]);
+        localStorage.setItem("tracks",JSON.stringify(tracks));
         for (let i = 1; i <=68; i++) {
             document.getElementById("playlist number").add(new Option(i));
         };
-        console.log(tracks);
         tracks.map(track => {
             if (track['cluster'] == document.getElementById("playlist number").value) {
                 console.log('hit');
