@@ -50,16 +50,16 @@ def callback():
 
 @app.route('/run', methods = ['POST'])
 def run():
-    # track_data = json.loads(request.form['data'])
-    # df = pd.DataFrame(track_data)
-    # df['release_date'] = pd.to_datetime(df['release_date'])
-    # df['explicit'] = df['explicit'].replace({True:1,False:0})
-    # X = df.drop(['title','id','artist_name','album_name','album_image'],axis=1)
-    # X['release_date'] = (X['release_date'] - min(X['release_date'])) / (max(X['release_date']) - min(X['release_date']))
-    # scaler = MinMaxScaler()
-    # X_scaled = scaler.fit_transform(X)
-    # n_clusters = int(len(X_scaled) / 50)
-    # groups = KMeans(n_clusters=n_clusters).fit_predict(X_scaled)
+    track_data = json.loads(request.form['data'])
+    df = pd.DataFrame(track_data)
+    df['release_date'] = pd.to_datetime(df['release_date'])
+    df['explicit'] = df['explicit'].replace({True:1,False:0})
+    X = df.drop(['title','id','artist_name','album_name','album_image'],axis=1)
+    X['release_date'] = (X['release_date'] - min(X['release_date'])) / (max(X['release_date']) - min(X['release_date']))
+    scaler = MinMaxScaler()
+    X_scaled = scaler.fit_transform(X)
+    n_clusters = int(len(X_scaled) / 50)
+    groups = KMeans(n_clusters=n_clusters).fit_predict(X_scaled)
     # # df['cluster'] = kmeans
     print('PYTHON CODE RAN SUCCESSFULLY\n\n\n\n\n\n\nPYTHON CODE RAN SUCCESSFULLY')
     return '[1,2,3,4,5]'
