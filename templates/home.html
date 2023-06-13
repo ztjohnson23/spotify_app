@@ -103,11 +103,13 @@ function run() {
         let groups = JSON.parse(cluster_array);
         let tracks = JSON.parse(track_data);
         tracks.map((x,i) => x['cluster'] = groups[i]);
+        console.log(tracks);
         localStorage.setItem("tracks",JSON.stringify(tracks));
         for (let i = 1; i <=68; i++) {
             document.getElementById("playlist number").add(new Option(i));
         };
         for (let track of tracks) {
+            console.log(track);
             if (track['cluster'] == 0) {
                 console.log('hit');
                 document.getElementById("playlist display").innerHTML += '<p>'+ track.title + ' by ' + track.artist_name + '</p>'
@@ -133,7 +135,9 @@ function run() {
     n = document.getElementById('playlist number').value - 1;
     document.getElementById("playlist display").innerHTML = '';
     track_data.map(track => {
+            console.log(track);
             if (track['cluster'] == n) {
+                console.log('hit')
                 document.getElementById("playlist display").innerHTML += '<p>'+ track.title + ' by ' + track.artist_name + '</p>'
             }
         });    
