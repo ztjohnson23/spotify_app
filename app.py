@@ -50,7 +50,7 @@ def callback():
 
 @app.route('/run', methods = ['POST'])
 def run():
-    track_data = json.loads(request.form['data'])
+    track_data = json.loads(request.form.get('data'))
     # df = pd.DataFrame(track_data)
     # df['release_date'] = pd.to_datetime(df['release_date'])
     # df['explicit'] = df['explicit'].replace({True:1,False:0})

@@ -100,7 +100,7 @@ function run() {
     let track_data = JSON.parse(localStorage.getItem("tracks"));
     console.log(track_data);
     // downloadObjectAsJson(track_data,'tracks');
-    $.post('/run', {'data': track_data}, groups => {
+    $.post('/run', {data: track_data}, groups => {
         // localStorage.setItem('cluster_groups',groups)
         console.log('returned');
         track_data.map((x,i) => x['cluster'] = groups[i]);
