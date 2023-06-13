@@ -103,7 +103,7 @@ function run() {
         // localStorage.setItem('cluster_groups',groups)
         console.log('returned');
         let tracks = JSON.parse(track_data);
-        tracks.map((x,i) => x['cluster'] = groups[i]).then(x => localStorage.setItem("tracks",x));
+        tracks.map((x,i) => x['cluster'] = groups[i]);
         for (let i = 1; i <=68; i++) {
             document.getElementById("playlist number").add(new Option(i));
         };
