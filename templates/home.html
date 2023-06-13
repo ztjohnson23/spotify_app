@@ -99,7 +99,7 @@ getUserTrackData();
 function run() {
     let track_data = JSON.parse(localStorage.getItem("tracks"));
     // downloadObjectAsJson(track_data,'tracks');
-    $.post('/run', {headers: {cache-control: no-cache, x-content-type-options: no-sniff},data: track_data}, groups => {
+    $.post('/run', {headers: {'cache-control': 'no-cache', 'x-content-type-options': 'no-sniff'},data: track_data}, groups => {
         // localStorage.setItem('cluster_groups',groups)
         console.log('returned');
         track_data.map((x,i) => x['cluster'] = groups[i]);
