@@ -103,12 +103,14 @@ function run() {
         // localStorage.setItem('cluster_groups',groups)
         console.log('returned');
         let tracks = JSON.parse(track_data);
-        tracks.map((x,i) => x['cluster'] = groups[i]);
+        tracks.map((x,i) => x['cluster'] = groups[i]).then(x => localStorage.setItem("tracks",x));
         for (let i = 1; i <=68; i++) {
             document.getElementById("playlist number").add(new Option(i));
         };
+        console.log(tracks);
         tracks.map(track => {
             if (track['cluster'] == document.getElementById("playlist number").value) {
+                console.log('hit');
                 document.getElementById("playlist display").innerHTML += '<p>'+ track.title + ' by ' + track.artist_name + '</p>'
             }
         });
