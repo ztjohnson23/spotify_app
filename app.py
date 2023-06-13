@@ -61,7 +61,7 @@ def run():
     n_clusters = int(len(X_scaled) / 50)
     groups = KMeans(n_clusters=n_clusters).fit_predict(X_scaled)
     # df['cluster'] = kmeans
-    
+    print('PYTHON CODE RAN SUCCESSFULLY\n\n\n\n\n\n\nPYTHON CODE RAN SUCCESSFULLY')
     return str(groups.tolist())
 
 
