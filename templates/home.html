@@ -101,6 +101,7 @@ function run() {
     // downloadObjectAsJson(track_data,'tracks');
     $.post('/run', {data: track_data}, cluster_array => {
         let groups = JSON.parse(cluster_array);
+        console.log(groups);
         let tracks = JSON.parse(track_data);
         tracks.map((x,i) => x['cluster'] = groups[i]);
         console.log(tracks);
@@ -109,9 +110,7 @@ function run() {
             document.getElementById("playlist number").add(new Option(i));
         };
         for (let track of tracks) {
-            console.log(track);
             if (track['cluster'] == 0) {
-                console.log('hit');
                 document.getElementById("playlist display").innerHTML += '<p>'+ track.title + ' by ' + track.artist_name + '</p>'
             };
         };
