@@ -39,7 +39,7 @@ let track_data = [];
 let is_next = true;
 let offset = 0;
 
-while (is_next && offset < 300) {
+while (is_next) {
     response = await fetch('https://api.spotify.com/v1/me/tracks?limit=50&offset='+offset,{headers:header}).then(res => res.json());
     if (response.next == null) {
         is_next = false;
