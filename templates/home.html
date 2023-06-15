@@ -134,9 +134,7 @@ function run() {
     n = document.getElementById('playlist number').value - 1;
     document.getElementById("playlist display").innerHTML = '';
     track_data.map(track => {
-            console.log(track);
             if (track['cluster'] == n) {
-                console.log('hit')
                 document.getElementById("playlist display").innerHTML += '<p>'+ track.title + ' by ' + track.artist_name + '</p>'
             }
         });    
