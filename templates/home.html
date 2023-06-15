@@ -89,7 +89,7 @@ while (is_next) {
     };   
 
 // console.log(track_data);
-localStorage.setItem("tracks",JSON.stringify(track_data));
+sessionStorage.setItem("tracks",JSON.stringify(track_data));
 
 };
 
@@ -97,15 +97,15 @@ getUserTrackData();
 
 
 function run() {
-    let track_data = localStorage.getItem("tracks");
+    let track_data = sessionStorage.getItem("tracks");
     // downloadObjectAsJson(track_data,'tracks');
     $.post('/run', {data: track_data}, cluster_array => {
         let groups = JSON.parse(cluster_array);
-        console.log(groups);
         let tracks = JSON.parse(track_data);
         tracks.map((x,i) => x['cluster'] = groups[i]);
         console.log(tracks);
-        localStorage.setItem("tracks",JSON.stringify(tracks));
+        sessionStorage.removeItem('tracks')
+        sessionStorage.setItem("tracks",JSON.stringify(tracks));
         for (let i = 1; i <=15; i++) {
             document.getElementById("playlist number").add(new Option(i));
         };
@@ -130,7 +130,7 @@ function run() {
 //   };
 
   function changeDisplayedPlaylist() {
-    track_data = JSON.parse(localStorage.getItem('tracks'));
+    track_data = JSON.parse(sessionStorage.getItem('tracks'));
     console.log(track_data);
     n = document.getElementById('playlist number').value - 1;
     document.getElementById("playlist display").innerHTML = '';
