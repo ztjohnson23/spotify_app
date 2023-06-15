@@ -131,6 +131,7 @@ function run() {
 
   function changeDisplayedPlaylist() {
     track_data = JSON.parse(localStorage.getItem('tracks'));
+    console.log(track_data);
     n = document.getElementById('playlist number').value - 1;
     document.getElementById("playlist display").innerHTML = '';
     track_data.map(track => {
