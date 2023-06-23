@@ -111,8 +111,8 @@ console.log(artists_data);
 // Merge artist data with track data
 let track_data_with_artists = track_data.map(track => {
     let track_artist = artists_data.filter(artist => artist.id == track.artist_id);
-    track['artist_popularity'] = track_artist.popularity;
-    track['artist_genres'] = track_artist.genres;
+    track['artist_popularity'] = track_artist[0].popularity;
+    track['artist_genres'] = track_artist[0].genres;
     return track;
 });
 console.log(track_data_with_artists);
