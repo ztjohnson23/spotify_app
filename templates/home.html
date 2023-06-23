@@ -65,7 +65,9 @@ while (is_next) {
         // 'album_genres': track.track.album.genres,
         // 'album_popularity': track.track.album.popularity,
         'artist_name': track.track.artists[0].name,
+        'artist_id': track.track.artists[0].id,
         'album_name': track.track.album.name,
+        'album_id': track.track.album.id,
         'album_image': track.track.album.images[0].url,
 
 
@@ -88,13 +90,30 @@ while (is_next) {
     offset += 50;
     };   
 
+// Get unique ids
+function unique(value, index, array) {
+    return array.indexOf(value) === index;
+};
+let artist_ids_unique = track_data.map(x => x.artist_id).filter(unique);
+let album_ids_unique = track_data.map(x => x.album_id).filter(unique);
+console.log(artist_ids_unique);
+console.log(artist_ids_unique.length);
+
+console.log(album_ids_unique);
+console.log(album_ids_unique.length);
+
+// Fetch artist genres
+let artists_data = [];
+for (let i = 0; i < artist_ids_unique.length; i += 50) {
+    let artists_chunk = artist_ids_unique.slice(i,i+50);
+    let artists_results = await fetch('https://api.spotify.com/v1/artists?ids='+artists_chunk.toString(),{headers:header}).then(res => res.json());
+    let chunk_results = artists_results.map(artist => {'id': artist.id, 'name': artist.name, 'popularity': artist.popularity, 'genres': artist.genres});
+    artists_data = artists_data.concat(chunk_results);
+};
+console.log(artists_data);
+
 // console.log(track_data);
 sessionStorage.setItem("tracks",JSON.stringify(track_data));
-
-// test get genres
-let songids = track_data.slice(0,10).map(x => x.id);
-let dat = await fetch('https://api.spotify.com/v1/tracks?ids='+songids.toString(),{headers:header}).then(res => res.json());
-console.log(dat);
 };
 
 getUserTrackData();
