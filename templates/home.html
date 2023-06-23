@@ -93,7 +93,7 @@ sessionStorage.setItem("tracks",JSON.stringify(track_data));
 
 // test get genres
 let songids = track_data.slice(0,10).map(x => x.id);
-let dat = fetch('https://api.spotify.com/v1/tracks?ids='+songids.toString(),{headers:header}).then(res => res.json());
+let dat = await fetch('https://api.spotify.com/v1/tracks?ids='+songids.toString(),{headers:header}).then(res => res.json());
 console.log(dat);
 };
 
