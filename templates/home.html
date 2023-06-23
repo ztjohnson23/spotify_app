@@ -30,6 +30,7 @@
         <!-- JS script -->
         <script>
 
+// Get tracks
 async function getUserTrackData() {
 
 let auth = 'Bearer ' + '{{token}}';
@@ -96,11 +97,6 @@ function unique(value, index, array) {
 };
 let artist_ids_unique = track_data.map(x => x.artist_id).filter(unique);
 let album_ids_unique = track_data.map(x => x.album_id).filter(unique);
-console.log(artist_ids_unique);
-console.log(artist_ids_unique.length);
-
-console.log(album_ids_unique);
-console.log(album_ids_unique.length);
 
 // Fetch artist genres
 let artists_data = [];
@@ -112,8 +108,17 @@ for (let i = 0; i < artist_ids_unique.length; i += 50) {
 };
 console.log(artists_data);
 
+// Merge artist data with track data
+let track_data_with_artists = track_data.map(track => {
+    let track_artist = artists_data.filter(artist => artist.id == track.artist_id);
+    track['artist_popularity'] = track_artist.popularity;
+    track['artist_genres'] = track_artist.genres;
+    return track;
+});
+console.log(track_data_with_artists);
+
 // console.log(track_data);
-sessionStorage.setItem("tracks",JSON.stringify(track_data));
+sessionStorage.setItem("tracks",JSON.stringify(track_data_with_artists));
 };
 
 getUserTrackData();
@@ -142,27 +147,18 @@ function run() {
     console.log('post request sent')
 };
 
-// function downloadObjectAsJson(exportObj, exportName){
-//     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
-//     var downloadAnchorNode = document.createElement('a');
-//     downloadAnchorNode.setAttribute("href",     dataStr);
-//     downloadAnchorNode.setAttribute("download", exportName + ".json");
-//     document.body.appendChild(downloadAnchorNode); // required for firefox
-//     downloadAnchorNode.click();
-//     downloadAnchorNode.remove();
-//   };
 
-  function changeDisplayedPlaylist() {
-    track_data = JSON.parse(sessionStorage.getItem('tracks'));
-    console.log(track_data);
-    n = document.getElementById('playlist number').value - 1;
-    document.getElementById("playlist display").innerHTML = '';
-    track_data.map(track => {
-            if (track['cluster'] == n) {
-                document.getElementById("playlist display").innerHTML += '<p>'+ track.title + ' by ' + track.artist_name + '</p>'
-            }
-        });    
-  };
+function changeDisplayedPlaylist() {
+track_data = JSON.parse(sessionStorage.getItem('tracks'));
+console.log(track_data);
+n = document.getElementById('playlist number').value - 1;
+document.getElementById("playlist display").innerHTML = '';
+track_data.map(track => {
+        if (track['cluster'] == n) {
+            document.getElementById("playlist display").innerHTML += '<p>'+ track.title + ' by ' + track.artist_name + '</p>'
+        }
+    });    
+};
         </script>
     </body>
 </html>
