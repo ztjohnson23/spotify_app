@@ -107,7 +107,7 @@ let artists_data = [];
 for (let i = 0; i < artist_ids_unique.length; i += 50) {
     let artists_chunk = artist_ids_unique.slice(i,i+50);
     let artists_results = await fetch('https://api.spotify.com/v1/artists?ids='+artists_chunk.toString(),{headers:header}).then(res => res.json());
-    let chunk_results = artists_results.map(artist => {'id': artist.id, 'name': artist.name, 'popularity': artist.popularity, 'genres': artist.genres});
+    let chunk_results = artists_results.map(artist => ({'id': artist.id, 'name': artist.name, 'popularity': artist.popularity, 'genres': artist.genres}));
     artists_data = artists_data.concat(chunk_results);
 };
 console.log(artists_data);
