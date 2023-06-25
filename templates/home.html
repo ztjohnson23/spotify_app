@@ -115,7 +115,25 @@ let track_data_with_artists = track_data.map(track => {
     track['artist_genres'] = track_artist[0].genres;
     return track;
 });
-console.log(track_data_with_artists);
+
+
+// Fetch album genres
+let album_data = [];
+for (let i=0; i < album_ids_unique.length; i += 20) {
+    let albums_chunk = album_ids_unique.slice(i,i+20);
+    let album_results = await fetch('https://api.spotify.com/v1/albums?ids='+albums_chunk.toString(),{headers:header}).then(res=>res.json());
+    let chunk = album_results.albums.map(album => ({'id':album.id, 'genres': album.genres, 'popularity': album.popularity}));
+    album_data = album_data.concat(chunk)
+};
+
+// Merge album data
+let track_data_albums = track_data_with_artists.map(track => {
+    let track_album = album_data.filter(album => album.id == track.album_id);
+    track['album_genres'] = track_album[0].genres;
+    track['album_popularity'] = track_a;bum[0].popularity;
+    return track;
+})
+console.log(track_data_albums);
 
 // console.log(track_data);
 sessionStorage.setItem("tracks",JSON.stringify(track_data_with_artists));
