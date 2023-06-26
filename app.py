@@ -54,7 +54,7 @@ def run():
     df = pd.DataFrame(track_data)
     df['release_date'] = pd.to_datetime(df['release_date'])
     df['explicit'] = df['explicit'].replace({True:1,False:0})
-    X = df.drop(['title','id','artist_name','album_name','album_image'],axis=1)
+    X = df.drop(['title','id','artist_name','artist_genres','artist_id','album_id','album_genres','album_name','album_image'],axis=1)
     X['release_date'] = (X['release_date'] - min(X['release_date'])) / (max(X['release_date']) - min(X['release_date']))
     scaler = MinMaxScaler()
     X_scaled = scaler.fit_transform(X)

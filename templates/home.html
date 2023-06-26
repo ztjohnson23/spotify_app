@@ -130,7 +130,7 @@ for (let i=0; i < album_ids_unique.length; i += 20) {
 let track_data_albums = track_data_with_artists.map(track => {
     let track_album = album_data.filter(album => album.id == track.album_id);
     track['album_genres'] = track_album[0].genres;
-    track['album_popularity'] = track_a;bum[0].popularity;
+    track['album_popularity'] = track_album[0].popularity;
     return track;
 })
 console.log(track_data_albums);
