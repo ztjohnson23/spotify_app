@@ -70,6 +70,7 @@ while (is_next) {
         'album_name': track.track.album.name,
         'album_id': track.track.album.id,
         'album_image': track.track.album.images[0].url,
+        'available_markets': track.available_markets,
 
 
         'acousticness': audio_data[i].acousticness,
@@ -137,6 +138,7 @@ console.log(track_data_albums);
 
 // console.log(track_data);
 sessionStorage.setItem("tracks",JSON.stringify(track_data_with_artists));
+// document.getElementById('run').setAttribute(onclick,'')
 };
 
 getUserTrackData();

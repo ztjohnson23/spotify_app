@@ -54,10 +54,13 @@ def run():
     df = pd.DataFrame(track_data)
     df['release_date'] = pd.to_datetime(df['release_date'])
     df['explicit'] = df['explicit'].replace({True:1,False:0})
-    X = df.drop(['title','id','artist_name','artist_genres','artist_id','album_id','album_genres','album_name','album_image'],axis=1)
+    df = df[df['available_markets'] != '[]']
+    X = df.drop(['title','id','artist_name','artist_genres','artist_id','album_id','album_genres','album_name','album_image','available_markets'],axis=1)
     X['release_date'] = (X['release_date'] - min(X['release_date'])) / (max(X['release_date']) - min(X['release_date']))
+    X[['key','time_signature']] = X[['key','time_signature']].astype('string')
+    X_dummies = pd.get_dummies(X,columns=['key','time_signature'])
     scaler = MinMaxScaler()
-    X_scaled = scaler.fit_transform(X)
+    X_scaled = scaler.fit_transform(X_dummies)
     # n_clusters = int(len(X_scaled) / 50)
     n_clusters = 15
     groups = KMeans(n_clusters=n_clusters).fit_predict(X_scaled)
